@@ -30,13 +30,13 @@ import (
 	"log"
 	//"strconv"
 	//"regexp"
-	
 	"net/http"
 	"io/ioutil"
 	//"encoding/json"
 	
 	//iconv "github.com/djimenez/iconv-go"  //win error
 	"github.com/axgle/mahonia"
+	"os"
 )
 
 /**
@@ -77,7 +77,18 @@ func getPage(w http.ResponseWriter, r *http.Request) {
 	iconv.Convert(getinfo, putinfo, "gbk", "utf-8")
 */
 	
-	result := string(getinfo) //[]byte convter string
+	//result := string(getinfo) //[]byte convter string
+	result := getinfo
+
+	//写入文件
+	if result != nil {
+		fp :=  r.Form["cardno"][0] + ".html"
+		err = ioutil.WriteFile(fp, result, os.ModeAppend)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	fmt.Println(result)
 	fmt.Fprint(w, result)
 }
