@@ -33,10 +33,9 @@ import (
 	"net/http"
 	"io/ioutil"
 	//"encoding/json"
-	
-	//iconv "github.com/djimenez/iconv-go"  //win error
+	"github.com/PuerkitoBio/goquery"
 	"github.com/axgle/mahonia"
-	"os"
+	//"os"
 )
 
 /**
@@ -44,54 +43,33 @@ import (
  通过号码采集页面源码,并分析取出可用数据
 */
 func getPage(w http.ResponseWriter, r *http.Request) {
-	url := "http://query.shenzhentong.com:8080/sztnet/qryCard.do?cardno="
-	r.ParseForm()
+	//url := "http://query.shenzhentong.com:8080/sztnet/qryCard.do?cardno=328375558"
+	url := "http://127.0.0.1/328375558.html"
 
-	//如果不存在卡号
-	if len(r.Form["cardno"]) <= 0 {
-		//return
-		r.Form["cardno"][0] = "328375558"
-	}
-	url += r.Form["cardno"][0]
-	
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-
-	defer resp.Body.Close()
-	
-	//mahonia包 强荐
 	resbody := mahonia.NewDecoder("gbk").NewReader(resp.Body)
-	getinfo, err := ioutil.ReadAll(resbody)
+	_, err = ioutil.ReadAll(resbody)
 	if err != nil {
 		return
 	}
 
-/*
-	//iconv-go包
-	//gbk转码为utf-8
-	getinfo, _ := ioutil.ReadAll(resp.Body)
-	putinfo := make([]byte, len(getinfo))
-	putinfo = putinfo[:]
-	iconv.Convert(getinfo, putinfo, "gbk", "utf-8")
-*/
-	
-	//result := string(getinfo) //[]byte convter string
-	result := getinfo
-
-	//写入文件
-	if result != nil {
-		fp :=  r.Form["cardno"][0] + ".html"
-		err = ioutil.WriteFile(fp, result, os.ModeAppend)
-		if err != nil {
-			log.Fatal(err)
-		}
+	doc, err := goquery.NewDocumentFromReader(resbody)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	fmt.Println(result)
-	fmt.Fprint(w, result)
+	doc.Find(".tableact tr td").Each(func(i int, ss *goquery.Selection) {
+		fmt.Print(i)
+		fmt.Println(" ", ss.Text())
+	})
+
+	fmt.Println("What")
+	//fmt.Println(doc)
+	//fmt.Fprint(w, doc)
 }
 
 func main() {

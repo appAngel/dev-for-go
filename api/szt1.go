@@ -9,14 +9,10 @@ import (
 	"io/ioutil"
 //"encoding/json"
 
-	"golang.org/x/text/transform"
-	"golang.org/x/text/encoding/simplifiedchinese"
-	//"os"
-	//"github.com/PuerkitoBio/goquery"
-	"strings"
-	"bytes"
-	"bufio"
-	"io"
+	"github.com/djimenez/iconv-go"  //win error
+	//"github.com/axgle/mahonia"
+	"os"
+	"github.com/PuerkitoBio/goquery"
 )
 
 
@@ -39,16 +35,8 @@ func getPage1(w http.ResponseWriter, r *http.Request) {
 	robots, err := ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
 
-	sr := strings.NewReader(string(robots))
-	tr := transform.NewReader(sr, simplifiedchinese.GB18030.NewEncoder())
+	result, err := iconv.ConvertString(string(robots), "gbk", "utf-8")
 
-	var b bytes.Buffer
-	write := bufio.NewWriter(&b)
-	io.Copy(write, tr)
-	result := b.String()
-	fmt.Println(result)
-	//result, err := iconv.ConvertString(string(robots), "gbk", "utf-8")
-/*
 	doc, err := goquery.NewDocument(result)
 
 	doc.Find(".tableact").Each(func(i int, contentSelection *goquery.Selection) {
@@ -66,8 +54,8 @@ func getPage1(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	//fmt.Println(result)*/
-	fmt.Fprint(w, result)
+	//fmt.Println(result)
+	//fmt.Fprint(w, result)
 }
 
 func main() {
