@@ -49,7 +49,8 @@ func getPage(w http.ResponseWriter, r *http.Request) {
 
 	//如果不存在卡号
 	if len(r.Form["cardno"]) <= 0 {
-		return
+		//return
+		r.Form["cardno"][0] = "328375558"
 	}
 	url += r.Form["cardno"][0]
 	
