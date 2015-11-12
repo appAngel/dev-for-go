@@ -6,8 +6,8 @@
 
 ======
 ### 联系方式
-@ author: Skiychan <dev@skiy.net>   
-@ website: [Skiy Studio](http://www.skiy.net) www.skiy.net  
-@ QQ: 1005043848 QQ群:20625469   
-
+@Author: Skiychan <dev@skiy.net>   
+@Linked: [Skiy Studio](http://www.skiy.net) www.skiy.net  
+@Tencent: 1005043848 QQ群:20625469   
+@Wechat: Skiychan
 
