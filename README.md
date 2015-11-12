@@ -2,7 +2,7 @@
 
 ==================
 ### API项目
-1. [深圳通余额查询](docs/shenzhentong.md), [project](api/shenzhentong.go)
+1. [深圳通余额查询](../dev/docs/shenzhentong.md), [project](api/shenzhentong.go)
 
 ======
 ### 联系方式
