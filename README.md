@@ -8,6 +8,6 @@
 ### 联系方式
 @Author: Skiychan <dev@skiy.net>   
 @Linked: [Skiy Studio](http://www.skiy.net) www.skiy.net  
-@Tencent: 1005043848 QQ群:20625469   
+@Tencent: 1005043848 QQGroup:20625469   
 @Wechat: Skiychan
 
