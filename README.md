@@ -6,8 +6,8 @@
 
 ======
 ### 联系方式
+<<<<<<< HEAD
 Author: Skiychan 
 Email : dev@skiy.net   
 Link  : www.zzzzy.com
-
 
